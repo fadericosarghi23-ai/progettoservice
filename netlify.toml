@@ -1,0 +1,20 @@
+# Deploy statico su Netlify.
+# Il dominio canonico è in astro.config.mjs (SITE_URL).
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Astro 5.18 usa rolldown/vite 8: servono engine recenti
+  NODE_VERSION = "20"
+  # il lockfile generato su Windows fa saltare il binding nativo per Linux (npm#4828):
+  # su Netlify si installa fresco
+  NPM_FLAGS = "--no-package-lock"
+
+# [[DA COMPILARE: redirect 301 dai vecchi indirizzi del sito precedente del cliente alle nuove rotte.
+#  Servono solo se il cliente aveva già un sito con URL da reindirizzare. Esempio:
+#  [[redirects]]
+#    from = "/vecchia-pagina"
+#    to = "/progetti/"
+#    status = 301
+# ]]
